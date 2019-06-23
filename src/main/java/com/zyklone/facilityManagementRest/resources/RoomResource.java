@@ -2,6 +2,7 @@ package com.zyklone.facilityManagementRest.resources;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -10,6 +11,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import com.zyklone.facilityManagementRest.Room;
@@ -21,26 +23,41 @@ import com.zyklone.facilityManagementRest.services.RoomService;
 public class RoomResource {
 
 	@GET
-	public List<Room> getRooms(@PathParam("buildingId") int buildingId){
-		return RoomService.getRooms(buildingId);
+	public List<Room> getRooms(@Context HttpServletRequest request, @PathParam("buildingId") int buildingId){
+		List<Room> rooms = RoomService.getRooms(buildingId);
+		for(Room r : rooms)
+			addLinks(request.getRequestURI()+"/"+r.getRoomId(), r);
+		return rooms;
 	}
 	
 	@GET
 	@Path("/{roomId}")
-	public Room getRoom(@PathParam("buildingId") int buildingId, @PathParam("roomId") int roomId) {
-		return RoomService.getRoom(buildingId, roomId);
+	public Room getRoom(@Context HttpServletRequest request, @PathParam("buildingId") int buildingId, @PathParam("roomId") int roomId) {
+		Room r = RoomService.getRoom(buildingId, roomId);
+		if(r == null)
+			return null;
+		addLinks(request.getRequestURI(), r);
+		return r;
 	}
 	
 	@PUT
 	@Path("/{roomId}")
-	public Room modifyRoom(@PathParam("roomId") int roomId, Room room) {
+	public Room modifyRoom(@Context HttpServletRequest request, @PathParam("roomId") int roomId, Room room) {
 		room.setRoomId(roomId);
-		return RoomService.modifyRoom(room);
+		Room r = RoomService.modifyRoom(room);
+		if(r == null)
+			return null;
+		addLinks(request.getRequestURI(), r);
+		return r;
 	}
 	
 	@POST
-	public Room addRoom(@PathParam("buildingId") int buildingId, Room room) {
-		return RoomService.addRoom(room, buildingId);
+	public Room addRoom(@Context HttpServletRequest request, @PathParam("buildingId") int buildingId, Room room) {
+		Room r = RoomService.addRoom(room, buildingId);
+		if(r == null)
+			return null;
+		addLinks(request.getRequestURI()+"/"+r.getRoomId(), r);
+		return r;
 	}
 	
 	@DELETE
@@ -52,6 +69,11 @@ public class RoomResource {
 	@Path("/{roomId}/sensors")
 	public SensorResource getSensorService() {
 		return new SensorResource();
+	}
+	
+	private void addLinks(String path, Room room) {
+		room.addLink("self", path);
+		room.addLink("sensors", path+"/sensors");
 	}
 	
 }

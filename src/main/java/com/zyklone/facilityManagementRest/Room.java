@@ -17,8 +17,10 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement
+@XmlType(propOrder={"roomId","floor","roomNumber","links"})
 @Entity
 @Table(name="room")
 public class Room implements Serializable{
