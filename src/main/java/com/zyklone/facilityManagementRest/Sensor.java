@@ -19,9 +19,11 @@ import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement
 @XmlSeeAlso({LightSensor.class, DoorSensor.class, HumiditySensor.class, TemperatureSensor.class})
+@XmlType(propOrder={"sensorId","type","name","links"})
 @Entity
 @Table(name="sensor")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
