@@ -1,4 +1,4 @@
-package com.zyklone.facilityManagementRest;
+package com.zyklone.facilityManagementRest.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -46,9 +46,6 @@ public class Room implements Serializable{
 	@OneToMany(mappedBy="room", fetch = FetchType.LAZY)
 	private List<Sensor> sensors = new ArrayList<>();
 	
-	@OneToMany(mappedBy="room", fetch = FetchType.LAZY)
-	private List<Actuator> actuators = new ArrayList<>();
-	
 	@Transient
 	private List<Link> links = new ArrayList<>();
 
@@ -88,15 +85,6 @@ public class Room implements Serializable{
 
 	public void setSensors(List<Sensor> sensors) {
 		this.sensors = sensors;
-	}
-
-	@XmlTransient
-	public List<Actuator> getActuators() {
-		return actuators;
-	}
-
-	public void setActuators(List<Actuator> actuators) {
-		this.actuators = actuators;
 	}
 
 	public static long getSerialversionuid() {

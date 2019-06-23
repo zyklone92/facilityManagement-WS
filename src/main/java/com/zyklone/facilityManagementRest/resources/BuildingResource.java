@@ -14,7 +14,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.servlet.http.HttpServletRequest;
 
-import com.zyklone.facilityManagementRest.Building;
+import com.zyklone.facilityManagementRest.model.Building;
 import com.zyklone.facilityManagementRest.services.BuildingService;
 
 @Path("/buildings")

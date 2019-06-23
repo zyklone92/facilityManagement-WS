@@ -12,7 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-import com.zyklone.facilityManagementRest.Sensor;
+import com.zyklone.facilityManagementRest.model.Sensor;
 import com.zyklone.facilityManagementRest.services.SensorService;
 
 @Produces(value = {MediaType.TEXT_XML, MediaType.APPLICATION_JSON})

@@ -10,7 +10,7 @@ import javax.persistence.NonUniqueResultException;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
-import com.zyklone.facilityManagementRest.Building;
+import com.zyklone.facilityManagementRest.model.Building;
 
 public class BuildingService {
 	

@@ -1,4 +1,4 @@
-package com.zyklone.facilityManagementRest;
+package com.zyklone.facilityManagementRest.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 

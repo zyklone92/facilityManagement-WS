@@ -10,8 +10,8 @@ import javax.persistence.NonUniqueResultException;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
-import com.zyklone.facilityManagementRest.Building;
-import com.zyklone.facilityManagementRest.Room;
+import com.zyklone.facilityManagementRest.model.Building;
+import com.zyklone.facilityManagementRest.model.Room;
 
 public class RoomService {
 	

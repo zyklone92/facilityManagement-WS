@@ -1,4 +1,4 @@
-package com.zyklone.facilityManagementRest;
+package com.zyklone.facilityManagementRest.model;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;

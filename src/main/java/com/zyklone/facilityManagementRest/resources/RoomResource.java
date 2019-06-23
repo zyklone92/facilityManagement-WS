@@ -14,7 +14,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-import com.zyklone.facilityManagementRest.Room;
+import com.zyklone.facilityManagementRest.model.Room;
 import com.zyklone.facilityManagementRest.services.RoomService;
 
 

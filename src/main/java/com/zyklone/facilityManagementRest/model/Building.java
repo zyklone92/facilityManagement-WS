@@ -1,4 +1,4 @@
-package com.zyklone.facilityManagementRest;
+package com.zyklone.facilityManagementRest.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
