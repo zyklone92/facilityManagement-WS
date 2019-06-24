@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement
 @XmlSeeAlso({LightSensor.class, DoorSensor.class, HumiditySensor.class, TemperatureSensor.class})
-@XmlType(propOrder={"sensorId","type","name","links"})
+@XmlType(propOrder={"sensorId","type","name","links","unit"})
 @Entity
 @Table(name="sensor")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -46,6 +46,9 @@ public abstract class Sensor implements Serializable{
 	
 	@Transient
 	private String type;
+	
+	@Column(name="unit")
+	private String unit;
 	
 	@Transient
 	private List<Link> links = new ArrayList<>();
@@ -96,6 +99,14 @@ public abstract class Sensor implements Serializable{
 		this.type = type;
 	}
 	
+	public String getUnit() {
+		return unit;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+
 	public List<Link> getLinks() {
 		return links;
 	}

@@ -10,8 +10,6 @@ import javax.persistence.NonUniqueResultException;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
-import com.zyklone.facilityManagementRest.model.Building;
-import com.zyklone.facilityManagementRest.model.Room;
 import com.zyklone.facilityManagementRest.model.Sensor;
 
 public class SensorService {
