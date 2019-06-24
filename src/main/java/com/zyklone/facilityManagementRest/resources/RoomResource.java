@@ -67,7 +67,7 @@ public class RoomResource {
 	}
 	
 	@Path("/{roomId}/sensors")
-	public SensorResource getSensorService() {
+	public SensorResource getSensorResource() {
 		return new SensorResource();
 	}
 	

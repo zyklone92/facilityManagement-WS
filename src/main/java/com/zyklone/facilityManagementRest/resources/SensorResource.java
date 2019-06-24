@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -23,20 +22,20 @@ public class SensorResource {
 	public List<Sensor> getSensors(@Context HttpServletRequest request, @PathParam("buildingId") int buildingId, @PathParam("roomId") int roomId){
 		List<Sensor> sensors = SensorService.getSensors(buildingId, roomId);
 		for(Sensor s : sensors) 
-			addLinks(request.getRequestURI()+"/"+s.getSensorId(), s);
+			addLinks(request.getRequestURI()+"/"+s.getClass().getSimpleName().toLowerCase()+"s/"+s.getSensorId(), s);
 		return sensors;
 	}
 	
-	@GET
-	@Path("/{sensorId}")
-	public Sensor getSensor(@Context HttpServletRequest request, @PathParam("buildingId") int buildingId,
-			@PathParam("roomId") int roomId, @PathParam("sensorId") int sensorId) {
-		Sensor s = SensorService.getSensor(buildingId, roomId, sensorId);
-		if(s == null)
-			return null;
-		addLinks(request.getRequestURI(), s);
-		return s;
-	}
+//	@GET
+//	@Path("/{sensorId}")
+//	public Sensor getSensor(@Context HttpServletRequest request, @PathParam("buildingId") int buildingId,
+//			@PathParam("roomId") int roomId, @PathParam("sensorId") int sensorId) {
+//		Sensor s = SensorService.getSensor(buildingId, roomId, sensorId);
+//		if(s == null)
+//			return null;
+//		addLinks(request.getRequestURI(), s);
+//		return s;
+//	}
 	
 //	@PUT
 //	@Path("/{roomId}")
@@ -50,10 +49,15 @@ public class SensorResource {
 //		return RoomService.addRoom(room, buildingId);
 //	}
 	
-	@DELETE
-	@Path("/{sensorId}")
-	public Sensor deleteSensor(@PathParam("buildingId") int buildingId, @PathParam("roomId") int roomId, @PathParam("sensorId") int sensorId) {
-		return SensorService.removeSensor(buildingId, roomId, sensorId);
+//	@DELETE
+//	@Path("/{sensorId}")
+//	public Sensor deleteSensor(@PathParam("buildingId") int buildingId, @PathParam("roomId") int roomId, @PathParam("sensorId") int sensorId) {
+//		return SensorService.removeSensor(buildingId, roomId, sensorId);
+//	}
+	
+	@Path("/doorsensors")
+	public DoorSensorResource getDoorSensorResource() {
+		return new DoorSensorResource();
 	}
 	
 	private void addLinks(String path, Sensor sensor) {
