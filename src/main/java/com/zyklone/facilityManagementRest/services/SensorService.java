@@ -88,6 +88,7 @@ public class SensorService {
 			et.begin();
 			Sensor oldSensor = em.find(Sensor.class, newSensor.getSensorId());
 			//oldSensor.setType(newSensor.getType());
+			oldSensor.setUnit(newSensor.getUnit());
 			oldSensor.setName(newSensor.getName());
 			updateSensorValue(oldSensor, newSensor);
 			em.persist(oldSensor);
