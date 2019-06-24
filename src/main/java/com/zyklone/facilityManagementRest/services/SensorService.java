@@ -10,7 +10,12 @@ import javax.persistence.NonUniqueResultException;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
+import com.zyklone.facilityManagementRest.model.DoorSensor;
+import com.zyklone.facilityManagementRest.model.HumiditySensor;
+import com.zyklone.facilityManagementRest.model.LightSensor;
+import com.zyklone.facilityManagementRest.model.Room;
 import com.zyklone.facilityManagementRest.model.Sensor;
+import com.zyklone.facilityManagementRest.model.TemperatureSensor;
 
 public class SensorService {
 	
@@ -50,50 +55,51 @@ public class SensorService {
 		}
 	}
 	
-//	public static Sensor addSensor(@PathParam("buildingId") int buildingId, Sensor sensor, int roomId) {
-//		if(sensor == null || roomId < 0)
-//			return null;
-//		Room room = RoomService.getRoom(buildingId, roomId);
-//		if(room == null)
-//			return null;
-//		sensor.setRoom(room);
-//		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
-//		EntityTransaction et = null;
-//		try {
-//			et = em.getTransaction();
-//			et.begin();
-//			em.persist(sensor);
-//			et.commit();
-//		} catch(Exception e) {
-//			et.rollback();
-//			return null;
-//		} finally {
-//			em.close();
-//		}
-//		return sensor;
-//	}
+	public static Sensor addSensor(int buildingId, int roomId, Sensor sensor) {
+		if(buildingId < 0 || sensor == null || roomId < 0)
+			return null;
+		Room room = RoomService.getRoom(buildingId, roomId);
+		if(room == null)
+			return null;
+		sensor.setRoom(room);
+		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+		EntityTransaction et = null;
+		try {
+			et = em.getTransaction();
+			et.begin();
+			em.persist(sensor);
+			et.commit();
+		} catch(Exception e) {
+			et.rollback();
+			return null;
+		} finally {
+			em.close();
+		}
+		return sensor;
+	}
 	
-//	public static Sensor modifySensor(Sensor newSensor) {
-//		if(newSensor == null)
-//			return null;
-//		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
-//		EntityTransaction et = null;
-//		try {
-//			et = em.getTransaction();
-//			et.begin();
-//			Sensor oldSensor = em.find(Sensor.class, newSensor.getSensorId());
-//			oldSensor.setRoomNumber(newSensor.getRoomNumber());
-//			oldSensor.setFloor(newSensor.getFloor());
-//			em.persist(oldSensor);
-//			et.commit();
-//			return oldSensor;
-//		} catch(Exception e) {
-//			et.rollback();
-//			return null;
-//		} finally {
-//			em.close();
-//		}
-//	}
+	public static Sensor modifySensor(Sensor newSensor) {
+		if(newSensor == null)
+			return null;
+		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+		EntityTransaction et = null;
+		try {
+			et = em.getTransaction();
+			et.begin();
+			Sensor oldSensor = em.find(Sensor.class, newSensor.getSensorId());
+			//oldSensor.setType(newSensor.getType());
+			oldSensor.setName(newSensor.getName());
+			updateSensorValue(oldSensor, newSensor);
+			em.persist(oldSensor);
+			et.commit();
+			return oldSensor;
+		} catch(Exception e) {
+			et.rollback();
+			return null;
+		} finally {
+			em.close();
+		}
+	}
 	
 	public static Sensor removeSensor(int buildingId, int roomId, int sensorId) {
 		if(sensorId < 0)
@@ -114,6 +120,27 @@ public class SensorService {
 			return null;
 		} finally {
 			em.close();
+		}
+	}
+	
+	private static void updateSensorValue(Sensor oldSensor, Sensor newSensor) {
+		if(!oldSensor.getClass().equals(newSensor.getClass()))
+			return;
+		if(oldSensor instanceof DoorSensor) {
+			((DoorSensor) oldSensor).setOpen(((DoorSensor) newSensor).isOpen());
+			return;
+		}
+		if(oldSensor instanceof LightSensor) {
+			((LightSensor) oldSensor).setOn(((LightSensor) newSensor).isOn());
+			return;
+		}
+		if(oldSensor instanceof TemperatureSensor) {
+			((TemperatureSensor) oldSensor).setTemperature(((TemperatureSensor) newSensor).getTemperature());
+			return;
+		}
+		if(oldSensor instanceof HumiditySensor) {
+			((HumiditySensor) oldSensor).setHumidity(((HumiditySensor) newSensor).getHumidity());
+			return;
 		}
 	}
 
