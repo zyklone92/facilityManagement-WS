@@ -10,7 +10,6 @@ import javax.persistence.NonUniqueResultException;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
-import com.zyklone.facilityManagementRest.model.Building;
 import com.zyklone.facilityManagementRest.model.DoorSensor;
 import com.zyklone.facilityManagementRest.model.HumiditySensor;
 import com.zyklone.facilityManagementRest.model.LightSensor;

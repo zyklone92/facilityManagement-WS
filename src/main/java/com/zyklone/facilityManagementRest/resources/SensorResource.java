@@ -60,6 +60,21 @@ public class SensorResource {
 		return new DoorSensorResource();
 	}
 	
+	@Path("/lightsensors")
+	public LightSensorResource getLightSensorResource() {
+		return new LightSensorResource();
+	}
+	
+	@Path("/temperaturesensors")
+	public TemperatureSensorResource getTemperatureSensorResource() {
+		return new TemperatureSensorResource();
+	}
+	
+	@Path("/humiditysensors")
+	public HumiditySensorResource getHumiditySensorResource() {
+		return new HumiditySensorResource();
+	}
+	
 	private void addLinks(String path, Sensor sensor) {
 		sensor.addLink("self", path);
 	}
